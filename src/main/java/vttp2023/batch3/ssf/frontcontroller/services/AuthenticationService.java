@@ -23,16 +23,16 @@ public class AuthenticationService {
 
 
 	@Value("${authenticate.url}")
-	private String aUrl;//="https://authservice-production-e8b2.up.railway.app/api/authenticate";
+	private String aUrl;//="https://authservice-production-e8b2.up.railway.app/";
 
 	String fullAUrl=UriComponentsBuilder.fromUriString(aUrl)
 										.path("/api/authenticate")
-											.toUriString();
+										.toUriString();
 
 	// TODO: Task 2
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write the authentication method in here
-	public boolean authenticate(String username, String password) throws Exception {
+	public void authenticate(String username, String password) throws Exception {
 		Login login = new Login();
 		login.setUsername(username);
 		login.setPassword(password);
@@ -52,12 +52,12 @@ public class AuthenticationService {
 		String message = auth.getMessage().toLowerCase();
 		
 
-		if (message.contains("authenticate")){
-			return true;
+		// if (message.contains("authenticate")){
+		// 	return true;
 			
-		}
+		// }
 
-		return false;
+		// return false;
 
 
 	}
