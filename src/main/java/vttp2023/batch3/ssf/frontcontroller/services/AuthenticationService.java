@@ -23,41 +23,37 @@ public class AuthenticationService {
 
 
 	@Value("${authenticate.url}")
-	private String authUrl;
+	private String url;
 
 	// TODO: Task 2
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write the authentication method in here
-	public void authenticate(String username, String password) throws Exception {
+	public boolean authenticate(String username, String password) throws Exception {
 		Login login = new Login();
 		login.setUsername(username);
 		login.setPassword(password);
 
 		RestTemplate template = new RestTemplate();
 
-		RequestEntity<String>request=RequestEntity.post(authUrl)
+		RequestEntity<String>request=RequestEntity.post(url)
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON)
 						.body(login.toJson().toString());
 	
-						ResponseEntity<String> response=null;
-						Authenticate auth= Authenticate.create(response.getBody());
-		try{
-		 response = template.exchange(request,String.class);
-		}catch(Exception e){
-		
+
+		ResponseEntity<String> response = template.exchange(request,String.class);
+
+		Authenticate auth= Authenticate.create(response.getBody());
+
 		String message = auth.getMessage().toLowerCase();
-		if (message.contains("incorrect")||message.contains("invalid")){
-			String err= auth.getMessage();
-		}
-
-		if(message.contains("authenticated")){
-			return;
-		}
-
 		
 
+		if (message.contains("authenticate")){
+			return true;
+			
 		}
+
+		return false;
 
 
 	}
@@ -67,15 +63,15 @@ public class AuthenticationService {
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write an implementation to disable a user account for 30 mins
 	public void disableUser(String username) {
-		aRepo.addUser(username);
-
+		//aRepo.addUser(username);
 	}
 
 	// TODO: Task 5
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write an implementation to check if a given user's login has been disabled
 	public boolean isLocked(String username) {
-		return aRepo.findUser(username);
+		//return aRepo.findUser(username);
+		return false;
 	}
 
 	

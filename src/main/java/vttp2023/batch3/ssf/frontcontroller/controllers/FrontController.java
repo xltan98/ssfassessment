@@ -20,7 +20,7 @@ import vttp2023.batch3.ssf.frontcontroller.model.Login;
 import vttp2023.batch3.ssf.frontcontroller.services.AuthenticationService;
 
 @Controller
-@RequestMapping(path = {"/","/login"})
+@RequestMapping(path = {"/"})
 public class FrontController {
 	@Autowired
 	public AuthenticationService aSvc;
@@ -39,12 +39,12 @@ public class FrontController {
 			throws Exception {
 
 		if (bind.hasErrors()) {
-			Captcha captcha = (Captcha) s.getAttribute("captcha");
-			if (captcha != null) {
-				captcha = new Captcha();
-				m.addAttribute("captcha", captcha);
-				s.setAttribute("captcha", captcha);
-			}
+			// Captcha captcha = (Captcha) s.getAttribute("captcha");
+			// if (captcha != null) {
+			// 	captcha = new Captcha();
+			// 	m.addAttribute("captcha", captcha);
+			// 	s.setAttribute("captcha", captcha);
+			// }
 			return "view0";
 		}
 
@@ -53,50 +53,57 @@ public class FrontController {
 			return "view2";
 		}
 
-		Captcha captcha = (Captcha) s.getAttribute("captcha");
-		if (captcha != null) {
-			//if user get the captcha wrong
-			if (!isCorrectCaptcha(login.getCaptchaAnswer(), captcha)) {
+		// Captcha captcha = (Captcha) s.getAttribute("captcha");
+		// if (captcha != null) {
+		// 	//if user get the captcha wrong
+		// 	if (!isCorrectCaptcha(login.getCaptchaAnswer(), captcha)) {
 
-				bind.addError(new FieldError("login", "captchaAnswer", "captcha has failed"));
+		// 		bind.addError(new FieldError("login", "captchaAnswer", "captcha has failed"));
 
-				if (loginAttemptExceeded(s, login)) {
-					aSvc.disableUser(login.getUsername());
-					removeFromSession(s, login.getUsername());
-					return "view2";
-				}
+		// 		if (loginAttemptExceeded(s, login)) {
+		// 			aSvc.disableUser(login.getUsername());
+		// 			removeFromSession(s, login.getUsername());
+		// 			return "view2";
+		// 		}
 
-				Captcha aCaptcha= new Captcha();
-				m.addAttribute("captcha", aCaptcha);
-				s.setAttribute("captcha", aCaptcha);
+		// 		Captcha aCaptcha= new Captcha();
+		// 		m.addAttribute("captcha", aCaptcha);
+		// 		s.setAttribute("captcha", aCaptcha);
 
-				return "view0";
-			}
-		}
+		// 		return "view0";
+		// 	}
+		//}
 		
-		try{
+		//try{
 		aSvc.authenticate(login.getUsername(), login.getPassword());
-	}catch(Exception e){
+	// }catch(Exception e){
 		
-			//check if the username exceed
-		if (loginAttemptExceeded(s, login)) {
-			aSvc.disableUser(login.getUsername());
-			removeFromSession(s, login.getUsername());
-			return "view2";
-		}
+	// 		//check if the username exceed
+	// 	if (loginAttemptExceeded(s, login)) {
+	// 		aSvc.disableUser(login.getUsername());
+	// 		removeFromSession(s, login.getUsername());
+	// 		return "view2";
+	// 	}
 
-		
 
-		return "view0";}
+	// 	return "view0";
+	// }
 		
 		
-	
-	
 	
 
 		return "view1";
 
 	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession s){
+		s.invalidate();
+
+		return "redirect:/";
+	}
+
+
 
 	private boolean isCorrectCaptcha(int captchaAnswer, Captcha captcha) {
 		if (captchaAnswer == captcha.getAnswer()) {

@@ -12,13 +12,13 @@ public class ProtectedController {
 
 	// TODO Task 5
 	// Write a controller to protect resources rooted under /protected
-@GetMapping("/view1")
-public String protect(HttpSession s ){
+// @GetMapping("/view1")
+// public String protect(HttpSession s ){
 
-	//if(s.getAttribute())
+// 	//if(s.getAttribute())
 
-	return "view0";
+// 	return "view0";
 
-}
+// }
 
 }

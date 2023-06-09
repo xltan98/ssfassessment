@@ -14,12 +14,12 @@ public class AuthenticationRepository {
 private RedisTemplate<String,String> template;
 
 	public void addUser(String username){
-		this.template.opsForValue()
+		template.opsForValue()
 		.set(username, username, 1800, TimeUnit.SECONDS);
 	}
 
 	public boolean findUser(String username){
-		template.opsForValue().get(username);
+
 		if(template.opsForValue().get(username) == null) {
 			return false;
 		}

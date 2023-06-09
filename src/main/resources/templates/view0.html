@@ -39,15 +39,15 @@
 			<tr>
 				<tr data-th-if="${captcha != null}">
 					<td>
-						What is <span data-th-text="${captcha.firstNumber}"></span>?
+						What is <span data-th-text="${captcha.toString()}"></span>?
 					</td>
 				</tr>
 				<tr data-th-if="${captcha!= null}">
 					<td>
-						<label for="answer">Answer:</label>
+						<label>Answer:</label>
 					</td>
 					<td>
-						<input type="text" id="answer" placeholder="Answer" data-th-field="*{captchaAnswer}" />
+						<input type="text" id="answer" placeholder="answer" data-th-field="*{captchaAnswer}" />
 						<span data-th-if="${#fields.hasErrors('captchaAnswer')}" data-th-errors="*{captchaAnswer}"
 							data-th-errorclass="error"></span>
 					</td>
