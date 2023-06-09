@@ -31,7 +31,6 @@ public class RedisConfig {
 
 
  @Bean("login")
- @Primary
 
  @Scope("singleton")
  public RedisTemplate<String, String> redisTemplate(){

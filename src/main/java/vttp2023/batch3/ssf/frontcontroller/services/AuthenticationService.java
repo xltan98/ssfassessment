@@ -23,7 +23,11 @@ public class AuthenticationService {
 
 
 	@Value("${authenticate.url}")
-	private String url;
+	private String aUrl;//="https://authservice-production-e8b2.up.railway.app/api/authenticate";
+
+	String fullAUrl=UriComponentsBuilder.fromUriString(aUrl)
+										.path("/api/authenticate")
+											.toUriString();
 
 	// TODO: Task 2
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
@@ -35,7 +39,7 @@ public class AuthenticationService {
 
 		RestTemplate template = new RestTemplate();
 
-		RequestEntity<String>request=RequestEntity.post(url)
+		RequestEntity<String>request=RequestEntity.post(fullAUrl)
 						.contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_JSON)
 						.body(login.toJson().toString());
